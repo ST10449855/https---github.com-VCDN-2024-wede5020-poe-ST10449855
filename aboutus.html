@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Building Tomorrow's mission to empower South African youth through skills training and career guidance. Discover our story, team, and impact.">
+    <meta name="keywords" content="youth empowerment, skills training, South Africa, career guidance, about us, mission, vision">
+    <title>About Us - Building Tomorrow</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="_images/logo_trial.png" alt="Building Tomorrow Logo" width="100" height="90">
+            <h1>Building Tomorrow</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutus.html" aria-current="page">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="Getinvolved.html">Get Involved</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-us">
+            <h2>About Us</h2>
+            <p>Building Tomorrow is dedicated to bridging the gap between education and employment by empowering youth in underprivileged communities in South Africa.</p>
+            
+            <article class="mission">
+                <h3>Our Mission</h3>
+                <p>We aim to provide practical skills training, career guidance, and support to youth aged 16-30, helping them to build successful futures.</p>
+            </article>
+            
+            <article class="vision">
+                <h3>Our Vision</h3>
+                <p>Our vision is to create a generation of skilled, confident, and self-reliant young people who can contribute positively to society.</p>
+            </article>
+            
+            <article class="story">
+                <h3>Our Story</h3>
+                <p>Founded in response to the growing need for youth empowerment, Building Tomorrow has been a catalyst for change in communities across South Africa.</p>
+            </article>
+            
+            <article class="team">
+                <h3>Meet Our Team</h3>
+                <p>Our dedicated team of professionals and volunteers is committed to making a difference in the lives of South Africa's youth.</p>
+                <div id="team-members" class="team-grid"></div>
+            </article>
+            
+            <article class="testimonials">
+                <h3>Testimonials</h3>
+                <div id="testimonial-carousel" class="carousel">
+                    <!-- Testimonials will be dynamically added here -->
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Contact us: info@buildingtomorrow.org | +27 123 456 7890</p>
+            <p>&copy; <span id="currentYear"></span> Building Tomorrow. All Rights Reserved.</p>
+            <p>Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Last updated date
+        document.getElementById('lastUpdated').textContent = document.lastModified;
+
+        // Team members data
+        const teamMembers = [
+            { name: "Jane Doe", role: "Founder & CEO", image: "_images/OIP.jpeg" },
+            { name: "John Smith", role: "Program Director", image: "_images/OIP (1).jpeg" },
+            // Add more team members as needed
+        ];
+
+        // Testimonials data
+        const testimonials = [
+            { name: "Sarah M.", text: "Building Tomorrow changed my life. I now have the skills to support myself and my family." },
+            { name: "David K.", text: "The career guidance I received helped me find my true passion. I'm now pursuing my dream job." },
+            // Add more testimonials as needed
+        ];
+
+        $(document).ready(function() {
+            // Populate team members
+            const teamGrid = $('#team-members');
+            teamMembers.forEach(member => {
+                teamGrid.append(`
+                    <div class="team-member">
+                        <img src="${member.image}" alt="${member.name}" class="team-photo" width="150" height="150">
+                        <h4>${member.name}</h4>
+                        <p>${member.role}</p>
+                    </div>
+                `);
+            });
+
+            // Populate and initialize testimonial carousel
+            const carousel = $('#testimonial-carousel');
+            testimonials.forEach(testimonial => {
+                carousel.append(`
+                    <div class="testimonial">
+                        <blockquote>${testimonial.text}</blockquote>
+                        <cite>- ${testimonial.name}</cite>
+                    </div>
+                `);
+            });
+
+            // Simple carousel functionality
+            let currentTestimonial = 0;
+            function showNextTestimonial() {
+                $('.testimonial').eq(currentTestimonial).fadeOut(500, function() {
+                    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                    $('.testimonial').eq(currentTestimonial).fadeIn(500);
+                });
+            }
+            setInterval(showNextTestimonial, 5000); // Change testimonial every 5 seconds
+
+            // Fade in elements as they come into view
+            $(window).scroll(function() {
+                $('article').each(function() {
+                    const bottom_of_object = $(this).offset().top + $(this).outerHeight();
+                    const bottom_of_window = $(window).scrollTop() + $(window).height();
+                    
+                    if(bottom_of_window > bottom_of_object) {
+                        $(this).animate({'opacity':'1'}, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

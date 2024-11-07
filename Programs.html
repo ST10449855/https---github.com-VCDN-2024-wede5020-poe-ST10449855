@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Building Tomorrow's vocational skills training programs for South African youth. Learn about our courses in welding, carpentry, plumbing, and more.">
+    <meta name="keywords" content="vocational training, skills development, South Africa, welding, carpentry, plumbing">
+    <title>Our Programs - Building Tomorrow</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="_images/logo_trial.png" alt="Building Tomorrow Logo" width="100" height="90">
+            <h1>Building Tomorrow</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" aria-current="page">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="Getinvolved.html">Get Involved</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="programs">
+            <h2>Our Programs</h2>
+            <p>Building Tomorrow offers a range of programs designed to equip young people with the skills and confidence they need to succeed.</p>
+            
+            <article class="vocational-training">
+                <h3>Vocational Skills Training</h3>
+                <p>Gain practical skills in trades such as plumbing, welding, or carpentry through our Vocational Skills Training program.</p>
+                <div class="program-images">
+                    <img src="_images/Welding.png" alt="Student learning welding skills" width="400" height="400">
+                    <img src="_images/wood.png" alt="Carpentry workshop at Building Tomorrow" width="400" height="400">
+                </div>
+                <a href="#" class="cta-button" id="join-program">Join Program</a>
+            </article>
+
+            <article class="success-stories">
+                <h3>Success Stories</h3>
+                <p>Read about the positive impact our programs have had on participants' lives.</p>
+                <div class="story-images">
+                    <img src="_images/Weldingclass.png" alt="Welding class in session" width="400" height="400">
+                    <img src="_images/woodclass.png" alt="Woodworking class in progress" width="400" height="400">
+                    <img src="_images/Plumbing.png" alt="Students learning plumbing skills" width="400" height="400">
+                </div>
+            </article>
+
+            <article class="program-details" id="program-info">
+                <!-- Program details will be dynamically loaded here -->
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Contact us: info@buildingtomorrow.org | +27 123 456 7890</p>
+            <p>&copy; <span id="currentYear"></span> Building Tomorrow. All Rights Reserved.</p>
+            <p>Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Last updated date
+        document.getElementById('lastUpdated').textContent = document.lastModified;
+
+        $(document).ready(function() {
+            // Program details
+            const programDetails = {
+                welding: {
+                    title: "Welding Program",
+                    duration: "6 months",
+                    description: "Learn the art and science of welding, including MIG, TIG, and stick welding techniques."
+                },
+                carpentry: {
+                    title: "Carpentry Program",
+                    duration: "6 months",
+                    description: "Master woodworking skills, from basic joinery to advanced furniture making."
+                },
+                plumbing: {
+                    title: "Plumbing Program",
+                    duration: "6 months",
+                    description: "Gain expertise in residential and commercial plumbing systems installation and repair."
+                }
+            };
+
+            // Show program details when "Join Program" is clicked
+            $('#join-program').click(function(e) {
+                e.preventDefault();
+                const randomProgram = Object.values(programDetails)[Math.floor(Math.random() * Object.values(programDetails).length)];
+                $('#program-info').html(`
+                    <h4>${randomProgram.title}</h4>
+                    <p><strong>Duration:</strong> ${randomProgram.duration}</p>
+                    <p>${randomProgram.description}</p>
+                    <form id="program-signup">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="cta-button">Sign Up</button>
+                    </form>
+                `).fadeIn();
+            });
+
+            // Handle program signup
+            $(document).on('submit', '#program-signup', function(e) {
+                e.preventDefault();
+                alert('Thank you for your interest! We will contact you soon with more information.');
+                $('#program-signup')[0].reset();
+            });
+
+            // Fade in images as they come into view
+            $(window).scroll(function() {
+                $('img').each(function() {
+                    const bottom_of_object = $(this).offset().top + $(this).outerHeight();
+                    const bottom_of_window = $(window).scrollTop() + $(window).height();
+                    
+                    if(bottom_of_window > bottom_of_object) {
+                        $(this).animate({'opacity':'1'}, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Building Tomorrow - Reach out to us about youth skills training and development programs in South Africa. Sign up for our newsletter to stay updated.">
+    <meta name="keywords" content="contact, youth training, skills development, South Africa, education programs, newsletter">
+    <title>Contact Us - Building Tomorrow | Youth Skills Development</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="_images/logo_trial.png" alt="Building Tomorrow Logo" width="100" height="90">
+            <h1>Building Tomorrow</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="Getinvolved.html">Get Involved</a></li>
+                <li><a href="contact.html" aria-current="page">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <p>Have questions about our programs? We're here to help! Fill out the form below or reach out directly.</p>
+
+            <!-- Contact Form with JavaScript Validation -->
+            <form id="contactForm" class="contact-form" onsubmit="return validateForm(event)">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" 
+                           onfocus="clearField(this)" required>
+                    <span class="error-message" id="nameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email"
+                           onfocus="clearField(this)" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
+                           onfocus="clearField(this)" required>
+                    <span class="error-message" id="phoneError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="programs">Programs Information</option>
+                        <option value="enrollment">Enrollment Query</option>
+                        <option value="partnership">Partnership Opportunities</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" placeholder="Enter your message"
+                             onfocus="clearField(this)" required></textarea>
+                    <span class="error-message" id="messageError"></span>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+
+            <!-- Fake Newsletter Signup Form -->
+            <section class="newsletter-section">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Stay updated with our latest programs, success stories, and opportunities!</p>
+                <form id="newsletterForm" class="newsletter-form" onsubmit="return handleNewsletterSignup(event)">
+                    <div class="form-group">
+                        <label for="newsletterEmail">Email Address:</label>
+                        <input type="email" id="newsletterEmail" name="newsletterEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsletterFrequency">Email Frequency:</label>
+                        <select id="newsletterFrequency" name="newsletterFrequency" required>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="termsAgreed" required>
+                            I agree to receive emails from Building Tomorrow
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-btn">Subscribe</button>
+                </form>
+            </section>
+
+            <div class="contact-info">
+                <h3>Other Ways to Reach Us</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h4>Email</h4>
+                        <p><a href="mailto:info@buildingtomorrow.org">info@buildingtomorrow.org</a></p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Phone</h4>
+                        <p><a href="tel:+27123456790">+27 12 345 6790</a></p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Address</h4>
+                        <address>
+                            123 Main Street<br>
+                            Johannesburg<br>
+                            South Africa
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Contact us: info@buildingtomorrow.org | +27 123 456 7890</p>
+            <p>&copy; <span id="currentYear"></span> Building Tomorrow. All Rights Reserved.</p>
+            <p>Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Last updated date
+        document.getElementById('lastUpdated').textContent = document.lastModified;
+
+        // Form field clearing function
+        function clearField(element) {
+            if (element.value === element.defaultValue) {
+                element.value = '';
+            }
+        }
+
+        // Contact form validation function
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+            const errorMessages = {
+                name: '',
+                email: '',
+                phone: '',
+                message: ''
+            };
+
+            // Name validation
+            const name = document.getElementById('name').value;
+            if (name.length < 2) {
+                errorMessages.name = 'Name must be at least 2 characters long';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessages.email = 'Please enter a valid email address';
+                isValid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone').value;
+            const phoneRegex = /^\+?[\d\s-]{10,}$/;
+            if (!phoneRegex.test(phone)) {
+                errorMessages.phone = 'Please enter a valid phone number';
+                isValid = false;
+            }
+
+            // Message validation
+            const message = document.getElementById('message').value;
+            if (message.length < 10) {
+                errorMessages.message = 'Message must be at least 10 characters long';
+                isValid = false;
+            }
+
+            // Display error messages
+            document.getElementById('nameError').textContent = errorMessages.name;
+            document.getElementById('emailError').textContent = errorMessages.email;
+            document.getElementById('phoneError').textContent = errorMessages.phone;
+            document.getElementById('messageError').textContent = errorMessages.message;
+
+            if (isValid) {
+                // Form is valid, show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                document.getElementById('contactForm').reset();
+                return true;
+            }
+
+            return false;
+        }
+
+        // Newsletter signup handling function
+        function handleNewsletterSignup(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            const frequency = document.getElementById('newsletterFrequency').value;
+            
+            // In a real application, you would send this data to a server
+            console.log('Newsletter signup:', { email, frequency });
+            
+            alert(`Thank you for subscribing to our ${frequency} newsletter!`);
+            document.getElementById('newsletterForm').reset();
+            return false;
+        }
+
+        // jQuery functionality for enhanced user experience
+        $(document).ready(function() {
+            // Smooth scroll to form when clicking contact links
+            $('a[href="#contactForm"]').click(function(e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $('#contactForm').offset().top - 100
+                }, 1000);
+            });
+
+            // Form field animation
+            $('.form-group input, .form-group textarea').focus(function() {
+                $(this).parent('.form-group').addClass('focused');
+            }).blur(function() {
+                if (!$(this).val()) {
+                    $(this).parent('.form-group').removeClass('focused');
+                }
+            });
+
+            // Success message animation
+            $('.submit-btn').click(function() {
+                if ($(this).closest('form')[0].checkValidity()) {
+                    $(this).addClass('submitted');
+                    setTimeout(() => {
+                        $(this).removeClass('submitted');
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
